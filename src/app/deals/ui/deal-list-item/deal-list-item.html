@@ -1,0 +1,14 @@
+<div class="deal-card">
+    <div class="deal-image">
+        <img [src]="deal.thumb" [alt]="deal.title">
+    </div>
+    <div class="deal-body">
+        <h2 class="deal-title">{{ deal.title }}</h2>
+        <p class="deal-store text-muted text-sm">{{deal.storeID}}</p>
+        <div class="deal-pricing">
+            <span class="deal-sale mono">£{{deal.salePrice}}</span>
+            <span class="deal-was mono text-muted">£{{deal.normalPrice}}</span>
+            <span class="deal-badge">{{ getSavings(deal.savings) }}</span>
+        </div>
+    </div>
+</div>
