@@ -40,7 +40,7 @@ export class DealService {
   }
 
   getStores(): Observable<Store[]> {
-    return this.http.get<Store[]>('https://www.cheapshark.com/api/1.0/stosdsdsdres');
+    return this.http.get<Store[]>('https://www.cheapshark.com/api/1.0/stores');
   }
 
   getStoreByID(id: string): Store | undefined {
