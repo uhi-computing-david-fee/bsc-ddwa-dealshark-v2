@@ -1,1 +1,19 @@
-<app-deal-list [deals]="deals"></app-deal-list>
+@if (!loading) {
+
+    @if (error) {
+        <div class="container">
+            <p-message severity="error" icon="pi pi-exclamation-triangle">
+            {{ error }}
+            </p-message>
+        </div>
+    }
+    @else {
+        <app-deal-list [deals]="deals"></app-deal-list>
+    }
+}
+@else {
+    <app-load-spinner [message]="'Fetching Deals...'"></app-load-spinner>
+}
+
+
+

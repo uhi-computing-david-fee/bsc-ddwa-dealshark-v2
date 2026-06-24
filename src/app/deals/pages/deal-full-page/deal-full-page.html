@@ -1,25 +1,40 @@
-<div class="container">
+@if (errorMessage) {
+  <div class="error-message">
+    <h2>Something went wrong</h2>
+    <p>{{ errorMessage }}</p>
+  </div>
+}
+@else if (game$ | async; as game) {
+    <div class="container">
 
-    <div class="game-header">
-        <img class="game-thumb" [src]="game.info.thumb" [alt]="game.info.title" />
-        <div class="game-info">            
-            <h1>{{ game.info.title }}</h1>
-            <p class="text-muted text-sm">Cheapest ever</p>
-            <p class="mono game-price">{{ game.cheapestPriceEver.price | currency }}</p>            
-        </div>
-        <p-button icon="pi pi-heart-fill" label="Add to Wishlist" severity="secondary"></p-button>
-    </div>
-
-    <div class="deals-table">
-        @for(deal of game.deals; track deal.dealID) {
-            <div class="deal-row">
-                <img src="https://www.cheapshark.com/img/stores/icons/0.png" alt="Temp icon">
-                <span class="text-sm">Steam</span>
-                <span class="mono">{{ deal.price | currency}}</span>
-                <span class="mono text-muted text-sm deal-was">{{ deal.retailPrice | currency}}</span>
-                <p-tag [value]="getSavings(deal.savings)" severity="success" />                
+        <div class="game-header">
+            <img class="game-thumb" [src]="game.info.thumb" [alt]="game.info.title" />
+            <div class="game-info">            
+                <h1>{{ game.info.title }}</h1>
+                <p class="text-muted text-sm">Cheapest ever</p>
+                <p class="mono game-price">{{ game.cheapestPriceEver.price | currency }}</p>            
             </div>
-        }
-    </div>
+            <p-button icon="pi pi-heart-fill" label="Add to Wishlist" severity="secondary"></p-button>
+        </div>
 
-</div>
+        <div class="deals-table">
+            @for(deal of game.deals; track deal.dealID) {
+                <div class="deal-row">
+                    <img [src]="dealService.getStoreIcon(deal.storeID)" [alt]="dealService.getStoreName(deal.storeID)">
+                    <span class="text-sm">{{ dealService.getStoreName(deal.storeID) }}</span>
+                    <span class="mono">{{ deal.price | currency}}</span>
+                    <span class="mono text-muted text-sm deal-was">{{ deal.retailPrice | currency}}</span>
+                    <p-tag [value]="getSavings(deal.savings)" severity="success" />                
+                </div>
+            }
+        </div>
+
+    </div>
+}
+@else {
+    <app-load-spinner [message]="'Fetching game details...'"></app-load-spinner>
+}
+
+
+
+
