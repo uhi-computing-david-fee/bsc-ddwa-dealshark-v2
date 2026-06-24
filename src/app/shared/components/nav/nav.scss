@@ -66,3 +66,7 @@ nav {
     color: var(--color-surface);
     opacity: 0.85;
 }
+
+.active-nav {
+    border-bottom: 1px solid var(--color-primary);
+}

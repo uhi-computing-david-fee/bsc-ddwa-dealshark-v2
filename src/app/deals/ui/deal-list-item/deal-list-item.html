@@ -1,4 +1,4 @@
-<div class="deal-card">
+<a class="deal-card" [routerLink]="['/deal', deal.gameID]">
     <div class="deal-image">
         <img [src]="deal.thumb" [alt]="deal.title">
     </div>
@@ -11,4 +11,4 @@
             <span class="deal-badge">{{ getSavings(deal.savings) }}</span>
         </div>
     </div>
-</div>
+</a>
