@@ -12,6 +12,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { DealFilters } from '../../models/deal-filter.model';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-deal-list-page',
@@ -24,14 +25,15 @@ import { DealFilters } from '../../models/deal-filter.model';
     SelectModule,
     InputNumberModule,
     ToggleSwitchModule,
-    ButtonModule
+    ButtonModule,
+    AsyncPipe
   ],
   templateUrl: './deal-list-page.html',
   styleUrl: './deal-list-page.scss',
 })
 export class DealListPage implements OnInit {
 
-  dealService = inject(DealService);
+  private dealService = inject(DealService);
   private fb = inject(FormBuilder);
 
   filterForm = this.fb.group({
@@ -49,21 +51,12 @@ export class DealListPage implements OnInit {
   ];
 
   deals: Deal[] = [];
-  stores: Store[] = [];
   loading = true;
   error = '';
+  stores$ = this.dealService.stores$;
 
   ngOnInit(): void {
     this.fetchDeals();
-    // Get stores
-    this.dealService.getStores().subscribe({
-      next: stores => {
-        this.stores = stores;
-      },
-      error: err => {
-        console.error(err);
-      }
-    })
   }
 
   fetchDeals(filters: DealFilters = {}) {

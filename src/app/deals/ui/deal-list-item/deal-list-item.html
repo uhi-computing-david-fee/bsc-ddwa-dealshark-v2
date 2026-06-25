@@ -4,7 +4,9 @@
     </div>
     <div class="deal-body">
         <h2 class="deal-title">{{ deal.title }}</h2>
-        <p class="deal-store text-muted text-sm">{{ dealService.getStoreName(deal.storeID) }}</p>
+        @if (dealService.stores$.getValue().length) {
+            <p class="deal-store text-muted text-sm">{{ dealService.getStoreName(deal.storeID) }}</p>
+        }
         <div class="deal-pricing">
             <span class="deal-sale mono">£{{deal.salePrice}}</span>
             <span class="deal-was mono text-muted">£{{deal.normalPrice}}</span>

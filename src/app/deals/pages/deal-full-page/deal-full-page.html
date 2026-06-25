@@ -14,20 +14,28 @@
                 <p class="text-muted text-sm">Cheapest ever</p>
                 <p class="mono game-price">{{ game.cheapestPriceEver.price | currency }}</p>            
             </div>
-            <p-button icon="pi pi-heart-fill" label="Add to Wishlist" severity="secondary"></p-button>
-        </div>
-
-        <div class="deals-table">
-            @for(deal of game.deals; track deal.dealID) {
-                <div class="deal-row">
-                    <img [src]="dealService.getStoreIcon(deal.storeID)" [alt]="dealService.getStoreName(deal.storeID)">
-                    <span class="text-sm">{{ dealService.getStoreName(deal.storeID) }}</span>
-                    <span class="mono">{{ deal.price | currency}}</span>
-                    <span class="mono text-muted text-sm deal-was">{{ deal.retailPrice | currency}}</span>
-                    <p-tag [value]="getSavings(deal.savings)" severity="success" />                
-                </div>
+            @if (authService.currentUser$ | async) {
+                <p-button icon="pi pi-heart-fill" label="Add to Wishlist" severity="secondary"></p-button>
             }
         </div>
+
+        @if (dealService.stores$.getValue().length) {
+            <div class="deals-table">
+                @for(deal of game.deals; track deal.dealID) {
+                    <div class="deal-row">
+                        <img [src]="dealService.getStoreIcon(deal.storeID)" [alt]="dealService.getStoreName(deal.storeID)">
+                        <span class="text-sm">{{ dealService.getStoreName(deal.storeID) }}</span>
+                        <span class="mono">{{ deal.price | currency}}</span>
+                        <span class="mono text-muted text-sm deal-was">{{ deal.retailPrice | currency}}</span>
+                        <p-tag [value]="getSavings(deal.savings)" severity="success" />                
+                    </div>
+                }
+            </div>
+        }
+        @else {
+            <app-load-spinner [message]="'Fetching stores...'"></app-load-spinner>
+        }
+
 
     </div>
 }

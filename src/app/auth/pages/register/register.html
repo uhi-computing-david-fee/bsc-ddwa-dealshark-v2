@@ -2,6 +2,11 @@
     <div class="auth-card">
         <h1>Create account</h1>
         <p class="text-muted text-sm">Track deals and build your wishlist</p>
+
+        @if (error) {
+            <p-message severity="error">{{ error }}</p-message>
+        }
+
         <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="field">
                 <label for="email">Email</label>
@@ -31,7 +36,7 @@
                     </small>
                 }
             </div>
-            <p-button type="submit" label="Create account" icon="pi pi-user-plus" fluid [disabled]="registerForm.invalid" />
+            <p-button type="submit" label="Create account" icon="pi pi-user-plus" fluid [disabled]="registerForm.invalid" [loading]="loading" />
         </form>
         <p class="auth-footer text-sm text-muted">
             Already have an account? <a routerLink="/login">Sign in</a>

@@ -9,8 +9,13 @@
                 <li><a routerLink="" routerLinkActive="active-nav" [routerLinkActiveOptions]="{exact: true}">Deals</a></li>
                 <li><a routerLink="">Top Rated</a></li>
                 <li><a routerLink="">New Releases</a></li>
-                <li><a routerLink="wishlist" routerLinkActive="active-nav">Wishlist</a></li>
-                <li><a routerLink="login" class="nav-cta">Sign In</a></li>
+                @if (authenticated) {
+                    <li><a routerLink="wishlist" routerLinkActive="active-nav">Wishlist</a></li>
+                    <li><button class="nav-btn" (click)=logout()>Logout</button></li>
+                }
+                @else {
+                    <li><a routerLink="login" class="nav-cta">Sign In</a></li>
+                }
             </ul>
         </div>
     </div>

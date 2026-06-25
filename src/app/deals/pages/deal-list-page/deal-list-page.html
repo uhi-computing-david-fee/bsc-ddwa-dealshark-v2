@@ -16,7 +16,7 @@
                 <div class="filter-field">
                     <label for="stores" class="text-sm">Stores</label>
                     <p-multi-select
-                        [options]="stores"
+                        [options]="(stores$ | async) ?? []"
                         optionLabel="storeName"
                         optionValue="storeID"
                         placeholder="All Stores"

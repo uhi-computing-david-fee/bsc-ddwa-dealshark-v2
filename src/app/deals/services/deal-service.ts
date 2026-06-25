@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Deal } from '../models/deal.model';
 import { GameDetail } from '../models/deal-full.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Store } from '../models/store.model';
 import { MessageService } from 'primeng/api';
 import { DealFilters } from '../models/deal-filter.model';
@@ -13,21 +13,12 @@ import { DealFilters } from '../models/deal-filter.model';
 export class DealService {
 
   constructor() {
-    this.getStores().subscribe({
-      next: data => {
-        this.stores = data;
-      },
-      error: err => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Stores Error',
-          detail: 'Could not load store information, please reload page',
-        })
-      }
-    })
+    this.getStores();
   }
 
-  stores: Store[] = [];
+  private stores: Store[] = []; // local copy only
+  stores$  = new BehaviorSubject<Store[]>([]); // public stream
+
   private http = inject(HttpClient);
   private messageService = inject(MessageService);
 
@@ -46,8 +37,20 @@ export class DealService {
     return this.http.get<GameDetail>(`https://www.cheapshark.com/api/1.0/games`, { params });
   }
 
-  getStores(): Observable<Store[]> {
-    return this.http.get<Store[]>('https://www.cheapshark.com/api/1.0/stores');
+  private getStores() {
+    this.http.get<Store[]>('https://www.cheapshark.com/api/1.0/stores').subscribe({
+        next: stores => {
+          this.stores = stores;
+          this.stores$.next(stores);
+        },
+        error: err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Stores Error',
+            detail: 'Could not load store information, please reload page',
+          });
+        }
+    });
   }
 
   getStoreByID(id: string): Store | undefined {

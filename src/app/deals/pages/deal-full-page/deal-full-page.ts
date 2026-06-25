@@ -6,6 +6,7 @@ import { TagModule } from 'primeng/tag';
 import { DealService } from '../../services/deal-service';
 import { LoadSpinner } from '../../../shared/components/load-spinner/load-spinner';
 import { catchError, of } from 'rxjs';
+import { AuthService } from '../../../auth/services/auth-service';
 
 @Component({
   selector: 'app-deal-full-page',
@@ -17,6 +18,7 @@ export class DealFullPage {
 
   private route = inject(ActivatedRoute); 
   dealService = inject(DealService);
+  authService = inject(AuthService);
 
   errorMessage = '';
   private id = this.route.snapshot.paramMap.get('id');
