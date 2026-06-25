@@ -5,6 +5,7 @@ import { GameDetail } from '../models/deal-full.model';
 import { Observable } from 'rxjs';
 import { Store } from '../models/store.model';
 import { MessageService } from 'primeng/api';
+import { DealFilters } from '../models/deal-filter.model';
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +31,14 @@ export class DealService {
   private http = inject(HttpClient);
   private messageService = inject(MessageService);
 
-  getDeals(): Observable<Deal[]> {
-    return this.http.get<Deal[]>('https://www.cheapshark.com/api/1.0/deals');
+  getDeals(filters: DealFilters = {}): Observable<Deal[]> {
+    let params = new HttpParams();
+    if (filters.storeID) params = params.set('storeID', filters.storeID);
+    if (filters.sortBy) params = params.set('sortBy', filters.sortBy);
+    if (filters.upperPrice) params = params.set('upperPrice', filters.upperPrice);
+    if (filters.onSale) params = params.set('onSale', filters.onSale);
+
+    return this.http.get<Deal[]>('https://www.cheapshark.com/api/1.0/deals', { params });
   }
 
   getGame(id: string) {     

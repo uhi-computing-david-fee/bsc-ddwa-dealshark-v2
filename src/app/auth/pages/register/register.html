@@ -1,1 +1,40 @@
-<p>register works!</p>
+<div class="auth-wrap">
+    <div class="auth-card">
+        <h1>Create account</h1>
+        <p class="text-muted text-sm">Track deals and build your wishlist</p>
+        <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="field">
+                <label for="email">Email</label>
+                <input pInputText id="email" type="email" autocomplete="email" formControlName="email" aria-describedby="email-error" />
+                @if (registerForm.controls.email.invalid && registerForm.controls.email.touched) {
+                    <small class="field-error" id="email-error">
+                        @if(registerForm.controls.email.errors!['required']) {
+                            Email is required
+                        }
+                        @if (registerForm.controls.email.errors!['email']) {
+                            Please enter a valid email
+                        }
+                    </small>
+                }
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input pInputText id="password" type="password" formControlName="password" aria-describedby="password-error" />
+                @if (registerForm.controls.password.invalid && registerForm.controls.password.touched) {
+                    <small class="field-error" id="password-error">
+                        @if(registerForm.controls.password.errors!['required']) {
+                            Password is required
+                        }
+                        @if (registerForm.controls.password.errors!['minlength']) {
+                            A password must be 6 or more characters
+                        }
+                    </small>
+                }
+            </div>
+            <p-button type="submit" label="Create account" icon="pi pi-user-plus" fluid [disabled]="registerForm.invalid" />
+        </form>
+        <p class="auth-footer text-sm text-muted">
+            Already have an account? <a routerLink="/login">Sign in</a>
+        </p>
+    </div>
+</div>

@@ -8,6 +8,55 @@
         </div>
     }
     @else {
+        <div class="container">
+            <h1>The Best Game Deals</h1>
+            <form class="filter-bar" [formGroup]="filterForm" (ngSubmit)="applyFilters()">
+
+                <!-- Store Select -->
+                <div class="filter-field">
+                    <label for="stores" class="text-sm">Stores</label>
+                    <p-multi-select
+                        [options]="stores"
+                        optionLabel="storeName"
+                        optionValue="storeID"
+                        placeholder="All Stores"
+                        formControlName="selectedStores">
+                    </p-multi-select>
+                </div>
+
+                <!-- Sort order -->
+                <div class="filter-field">
+                    <label for="sort-by" class="text-sm">Sort by</label>
+                    <p-select
+                        inputId="sort-by"
+                        [options]="sortOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        formControlName="sortBy">
+                    </p-select>
+                </div>
+
+                <!-- Max Price -->
+                <div class="filter-field">
+                    <label for="max-price" class="text-sm">Max price</label>
+                    <p-inputnumber
+                        inputId="max-price"
+                        prefix="$"
+                        [min]="0"
+                        [useGrouping]="false"
+                        placeholder="Any price"
+                        formControlName="maxPrice" 
+                    />
+                </div>
+
+                <div class="on-sale">
+                    <label for="on-sale" class="text-sm">On sale only</label>
+                    <p-toggleswitch inputId="on-sale" formControlName="onSale" />
+                </div>
+                 
+                <p-button type="submit" label="Find Deals" icon="pi pi-search" />
+            </form>     
+        </div>
         <app-deal-list [deals]="deals"></app-deal-list>
     }
 }
