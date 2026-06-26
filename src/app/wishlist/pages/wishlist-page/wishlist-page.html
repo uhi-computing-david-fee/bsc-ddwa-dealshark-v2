@@ -1,1 +1,11 @@
-<p>wishlist-page works!</p>
+<div class="container">
+    <h1>Wishlist</h1>
+</div>
+
+@if (wishlist$ | async; as wishlist) {
+    <app-deal-list [deals]="wishlist"></app-deal-list>
+}
+@else {
+    <app-load-spinner [message]="'Fetching wishlist...'"></app-load-spinner>
+}
+

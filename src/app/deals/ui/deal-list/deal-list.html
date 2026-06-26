@@ -3,6 +3,9 @@
         @for(deal of deals; track deal.dealID) {
             <app-deal-list-item [deal]="deal"></app-deal-list-item>
         }
+        @empty {
+            <p class="text-muted">No deals to display</p>
+        }
     </div>   
 </div>
 

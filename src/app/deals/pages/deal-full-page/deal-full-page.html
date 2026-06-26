@@ -15,7 +15,24 @@
                 <p class="mono game-price">{{ game.cheapestPriceEver.price | currency }}</p>            
             </div>
             @if (authService.currentUser$ | async) {
-                <p-button icon="pi pi-heart-fill" label="Add to Wishlist" severity="secondary"></p-button>
+                @if (!isWishlist) {
+                    <p-button 
+                        icon="pi pi-heart-fill"
+                        label="Add to Wishlist"
+                        severity="secondary"
+                        (click)="addToWishList(game)"
+                        [loading]="isWishlistLoading">
+                    </p-button>
+                }
+                @else {
+                    <p-button
+                        icon="pi pi-heart"
+                        label="In Wishlist"
+                        severity="danger"
+                        (click)="removeFromWishlist()"
+                        [loading]="isWishlistLoading">
+                    </p-button>
+                }
             }
         </div>
 
@@ -35,8 +52,6 @@
         @else {
             <app-load-spinner [message]="'Fetching stores...'"></app-load-spinner>
         }
-
-
     </div>
 }
 @else {

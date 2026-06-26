@@ -5,11 +5,6 @@ export interface Deal {
   salePrice:          string;
   normalPrice:        string;
   savings:            string;
-  metacriticScore:    string;
-  steamRatingText:    string;
-  steamRatingPercent: string;
-  steamAppID:         string | null;
-  dealRating:         string;
   dealID:             string;
   thumb:              string;
 }
